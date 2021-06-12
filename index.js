@@ -10,18 +10,15 @@ const app = express();
 // Configuración cors
 app.use(cors());
 
+//lectura y parseo del body
+app.use(express.json());
+
 // Conexion a mongoDB
 dbConnection();
 
 // Rutas
-app.get( '/', (req, res) => {
-    
-    res.json({
-        ok: true,
-        msg: 'Hola amigos'
-    })
-
-} );
+app.use( '/api/usuarios', require('./rutas/usuarios') );
+app.use( '/api/login', require('./rutas/auth') );
 
 app.listen(process.env.PORT, () => {
     console.log('Servidor corriendo en puerto ' + process.env.PORT);
